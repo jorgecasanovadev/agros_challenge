@@ -6,6 +6,7 @@ import 'package:agros_challenge/components/views/image_components.dart';
 import 'package:agros_challenge/components/views/spinner_loader.dart';
 import 'package:agros_challenge/modules/gallery/stores/gallery_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _homeKey = GlobalKey<FormState>();
   final _urlController = TextEditingController();
-  String _userName = '';
+  String _username = '';
 
   bool _isLoading = false;
 
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.maps_home_work, size: 36),
-        title: Text("Bienvenido $_userName"),
+        title: Text("Bienvenido $_username"),
       ),
       body: Stack(
         children: [
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Form(
                 key: _homeKey,
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                   child: Column(
                     children: <Widget>[
                       buildCounterField(context),
@@ -59,6 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: buildSearchButton(context),
+                      ),
+                      const Divider(thickness: 2.0),
+                      SizedBox(
+                        width: double.infinity,
+                        child: buildGalleryButton(context),
                       ),
                       const Divider(thickness: 2.0),
                     ],
@@ -71,13 +77,18 @@ class _HomeScreenState extends State<HomeScreen> {
             visible: _isLoading,
             child: const Center(child: SpinnerLoader()),
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 200),
-            child: SingleChildBuilder(
-              builder: ((context, child) => buildVerticalScrollImages(context)),
+          Observer(
+            builder: (_) => Container(
+              padding: const EdgeInsets.only(top: 250),
+              child: SingleChildBuilder(
+                builder: ((context, child) =>
+                    buildVerticalScrollImages(context)),
+              ),
             ),
           ),
-          buildHorizontalScrollImages(context),
+          Observer(
+            builder: (_) => buildHorizontalScrollImages(context),
+          ),
         ],
       ),
     );
@@ -138,13 +149,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  buildGalleryButton(BuildContext context) {
+    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      backgroundColor: ColorTheme.secondaryColor.withOpacity(0.6),
+      padding: BtnTheme.btnPadding,
+      shape: BtnTheme.btnShape,
+    );
+    return TextButton(
+      style: flatButtonStyle,
+      child: Text("Galleria", style: BtnPrimaryTheme.btnTextStyle),
+      onPressed: () => Navigator.of(context).pushNamed('/gallery'),
+    );
+  }
+
   formSeparator() {
     return const SizedBox(height: 15.0);
   }
 
   void getClientName() async {
     ClientSharedPreferences.getClientName().then((value) {
-      setState(() => _userName = value!);
+      setState(() => _username = value!);
     });
   }
 
@@ -155,21 +179,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   buildVerticalScrollImages(BuildContext context) {
-    final galleryStore = context.read<GalleryStore>();
+    final galleryStore = context.watch<GalleryStore>();
     return Center(
       child: ListView.builder(
         primary: false,
         shrinkWrap: true,
         itemCount: galleryStore.imageUrlList.length,
         itemBuilder: (BuildContext context, int index) {
-          return imageShow(context, galleryStore.imageUrlList[index]);
+          return imageShow(context, galleryStore.imageUrlList[index], () {
+            setState(() => galleryStore.deleteImageFromList(index));
+          });
         },
       ),
     );
   }
 
   buildHorizontalScrollImages(BuildContext context) {
-    final galleryStore = context.read<GalleryStore>();
+    final galleryStore = context.watch<GalleryStore>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,

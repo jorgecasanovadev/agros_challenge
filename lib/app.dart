@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:agros_challenge/components/theme/color_theme.dart';
 import 'package:agros_challenge/components/views/fade_router.dart';
 import 'package:agros_challenge/modules/authentication/views/login_screen.dart';
+import 'package:agros_challenge/modules/gallery/views/gallery_screen.dart';
 import 'package:agros_challenge/modules/home/views/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,8 @@ class _AppState extends State<App> {
             return FadeRouter(page: const LoginScreen());
           case '/home':
             return FadeRouter(page: const HomeScreen());
-          // case '/gallery':
-          //   return FadeRouter(page: const GalleryScreen());
+          case '/gallery':
+            return FadeRouter(page: const GalleryScreen());
         }
         return null;
       },

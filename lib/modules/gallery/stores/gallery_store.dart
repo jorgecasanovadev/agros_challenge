@@ -17,4 +17,10 @@ abstract class _GalleryStoreBase with Store {
   void addImageToList(image) {
     imageUrlList.add(image);
   }
+
+  @action
+  void deleteImageFromList(index) {
+    imageUrlList.removeAt(index);
+    ++imageCount;
+  }
 }
