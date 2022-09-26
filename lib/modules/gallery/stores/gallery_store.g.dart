@@ -64,6 +64,17 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
   }
 
   @override
+  void deleteImageFromList(dynamic index) {
+    final _$actionInfo = _$_GalleryStoreBaseActionController.startAction(
+        name: '_GalleryStoreBase.deleteImageFromList');
+    try {
+      return super.deleteImageFromList(index);
+    } finally {
+      _$_GalleryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 imageCount: ${imageCount},
