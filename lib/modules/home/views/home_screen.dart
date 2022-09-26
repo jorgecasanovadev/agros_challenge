@@ -7,8 +7,6 @@ import 'package:agros_challenge/components/views/spinner_loader.dart';
 import 'package:agros_challenge/modules/gallery/stores/gallery_store.dart';
 import 'package:flutter/material.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -24,10 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _urlController = TextEditingController();
   String _userName = '';
 
-  // bool _hasData = false;
   bool _isLoading = false;
-
-  List<Widget> _imageListSlider = [];
 
   @override
   void initState() {
@@ -83,17 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           buildHorizontalScrollImages(context),
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     Container(
-          //       padding: const EdgeInsets.all(16.0),
-          //       color: ColorTheme.primaryColor.withOpacity(0.4),
-          //       child: buildCarrouselImages(context),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -209,21 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 20),
       ],
-    );
-  }
-
-  buildCarrouselImages(BuildContext context) {
-    final galleryStore = context.read<GalleryStore>();
-    _imageListSlider = galleryStore.imageUrlList
-        .map((item) => imageSlider(context, item))
-        .toList();
-    return CarouselSlider(
-      options: CarouselOptions(
-        aspectRatio: 3.5,
-        viewportFraction: 0.5,
-        enlargeCenterPage: true,
-      ),
-      items: _imageListSlider,
     );
   }
 }
