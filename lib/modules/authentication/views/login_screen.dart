@@ -5,7 +5,6 @@ import 'package:agros_challenge/components/theme/btn_theme.dart';
 import 'package:agros_challenge/components/theme/color_theme.dart';
 import 'package:agros_challenge/components/theme/inputs_theme.dart';
 import 'package:agros_challenge/components/views/spinner_loader.dart';
-import 'package:agros_challenge/modules/home/views/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  bool _failedLogin = false; //visibilidad
   bool _isLoading = false;
 
   bool _passwordIsObscured = true;
@@ -62,22 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         'assets/images/logo_agros.png',
                         width: 280,
                         height: 280,
-                      ),
-                      Visibility(
-                        visible: _failedLogin,
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Center(
-                            child: Text(
-                              'Datos de Acceso Incorrectos',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.red[800],
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
                       ),
                       buildUsernameField(),
                       formSeparator(),
@@ -166,9 +148,6 @@ class _LoginScreenState extends State<LoginScreen> {
       style: flatButtonStyle,
       child: Text("Ingresar", style: BtnPrimaryTheme.btnTextStyle),
       onPressed: () {
-        setState(() {
-          this._failedLogin = false;
-        });
         if (_loginFormKey.currentState!.validate()) {
           setState(() => _isLoading = true);
           authenticateClient(context);

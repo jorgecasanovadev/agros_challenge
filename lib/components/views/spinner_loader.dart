@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SpinnerLoader extends StatelessWidget {
-  const SpinnerLoader({Key? key, this.opacity = 0.5}) : super(key: key);
+  const SpinnerLoader({Key? key, this.opacity = 0.5, this.color = Colors.white})
+      : super(key: key);
   final double opacity;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +12,9 @@ class SpinnerLoader extends StatelessWidget {
       children: [
         Opacity(
           opacity: opacity,
-          child: const ModalBarrier(
+          child: ModalBarrier(
             dismissible: false,
-            color: Colors.white,
+            color: color,
           ),
         ),
         const Center(child: CircularProgressIndicator()),

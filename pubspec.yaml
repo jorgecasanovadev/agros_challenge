@@ -30,6 +30,8 @@ dependencies:
   provider:
   sqflite:
   shared_preferences:
+  http:
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:

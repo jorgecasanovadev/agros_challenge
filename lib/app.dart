@@ -35,6 +35,8 @@ class _AppState extends State<App> {
             return FadeRouter(page: const LoginScreen());
           case '/home':
             return FadeRouter(page: const HomeScreen());
+          // case '/gallery':
+          //   return FadeRouter(page: const GalleryScreen());
         }
         return null;
       },
