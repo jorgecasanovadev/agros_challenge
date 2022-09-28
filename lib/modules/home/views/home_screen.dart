@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: Text(
-        'Imagenes restantes: ${galleryStore.imageCount}',
+        'Imagenes restantes: ${5 - galleryStore.imageCount}',
         style: InputTheme.labelTextStyle.copyWith(
           color: ColorTheme.secondaryColor,
           fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return TextButton(
       style: flatButtonStyle,
       child: Text("Cargar Imagen", style: BtnPrimaryTheme.btnTextStyle),
-      onPressed: (galleryStore.imageCount == 0)
+      onPressed: (galleryStore.imageCount == 5)
           ? null
           : () {
               if (_homeKey.currentState!.validate()) {

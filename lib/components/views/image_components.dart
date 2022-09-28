@@ -16,10 +16,12 @@ GestureDetector imageSlider(BuildContext context, String item) {
             Image.network(
               item,
               fit: BoxFit.cover,
+              width: 100,
             ),
             Positioned(
               bottom: 0.0,
               child: Container(
+                width: 100,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -99,6 +101,7 @@ Container imageShow(
               item,
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
             ),
             Positioned(
               right: 0.0,
@@ -142,11 +145,10 @@ GestureDetector imageToGallery(BuildContext context, String item) {
       margin: const EdgeInsets.all(5.0),
       child: Stack(
         children: <Widget>[
-          Image.network(
-            item,
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height,
-          ),
+          Image.network(item,
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width),
           Positioned(
             child: Container(
               decoration: const BoxDecoration(

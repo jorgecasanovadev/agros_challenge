@@ -5,13 +5,13 @@ class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 
 abstract class _GalleryStoreBase with Store {
   @observable
-  int imageCount = 5;
+  int imageCount = 0;
 
   @observable
   List imageUrlList = <String>[];
 
   @computed
-  int get counterImages => --imageCount;
+  int get counterImages => ++imageCount;
 
   @action
   void addImageToList(image) {
@@ -21,6 +21,6 @@ abstract class _GalleryStoreBase with Store {
   @action
   void deleteImageFromList(index) {
     imageUrlList.removeAt(index);
-    ++imageCount;
+    --imageCount;
   }
 }
